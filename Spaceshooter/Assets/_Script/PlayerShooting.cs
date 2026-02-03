@@ -4,25 +4,36 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPrefabs;
-    public float shootingInterval;
+    public GameObject bulletPrefab;
+
+    public Vector3 bulletOffset;
     private float lastBulletTime;
+    public float shootingInterval;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Time.time - lastBulletTime >
-            shootingInterval)
+            UpdateFiring();
+        }
+        
+    }
+    private void UpdateFiring()
+    {
+            if(Time.time - lastBulletTime > shootingInterval)
             {
                 ShootBullet();
                 lastBulletTime = Time.time;
-            }
-        }
+            }    
     }
     private void ShootBullet()
     {
-        Instantiate(bulletPrefabs, transform.position, transform.rotation);
+        var bullet = Instantiate(bulletPrefab, transform.position + bulletOffset, transform.rotation);
     }
 }
